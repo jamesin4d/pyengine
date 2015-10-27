@@ -6,7 +6,7 @@
 #
 # --------------------------------------------------------------------
 
-from states.game import *
+from states import splash
 from eng import *
 import os
 os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (120, 20)
@@ -22,5 +22,5 @@ def main():
     pygame.display.set_mode(display)
     pygame.display.set_caption("BAM!")
     e = FiniteStateMachine()
-    e.current_state = Game()
+    e.current_state = splash.SplashScreen()
     e.run()
