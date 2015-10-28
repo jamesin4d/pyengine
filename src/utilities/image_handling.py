@@ -21,6 +21,19 @@ def get_image(image):
     img.set_colorkey((255, 255, 255))
     return img
 
+def centerOnlyX(img_size, surf_size):
+    img_x, img_y = img_size
+    sur_x, sur_y = surf_size
+    cen_x = sur_x/2 - img_x/2
+    cen_y = sur_y/2 - img_y/2
+    return cen_x
+
+def centerOnlyY(img_size, surf_size):
+    img_x, img_y = img_size
+    sur_x, sur_y = surf_size
+    cen_x = sur_x/2 - img_x/2
+    cen_y = sur_y/2 - img_y/2
+    return cen_y
 
 def center(img_size, surf_size):
     img_x, img_y = img_size
