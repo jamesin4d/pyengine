@@ -12,9 +12,14 @@ import pygame
 
 
 class Title(State):
+    logo = None
+    new_game_button = None
+    load_game_button = None
+    options_button = None
+    quit_button = None
+    user_interface = []
     def __init__(self):
         State.__init__(self)
-
         self.canvas = image_handling.get_image('img/titlescreen/title.png')
         self.next_state = Game()
         self.canvas = pygame.transform.scale(self.canvas, self.screen.get_size())
@@ -24,21 +29,32 @@ class Title(State):
 
     def set_up_user_interface(self):
         logo = image_handling.get_image('img/titlescreen/titlelogo.png')
-        logo_pos = (300,10)
-        self.canvas.blit(logo,logo_pos)
-        load = image_handling.get_image('img/titlescreen/load.png')
-        load_pos = (650,315)
-        self.canvas.blit(load,load_pos)
-        new = image_handling.get_image('img/titlescreen/new.png')
-        new_pos = (650,270)
-        self.canvas.blit(new,new_pos)
-        option = image_handling.get_image('img/titlescreen/option.png')
-        option_pos = (650,360)
-        self.canvas.blit(option,option_pos)
-        quit = image_handling.get_image('img/titlescreen/quit.png')
-        quit_pos = (650,405)
-        self.canvas.blit(quit,quit_pos)
+        logo_pos = (150,10)
+        self.logo = graphicaluserinterface.Button(logo,logo_pos)
+        self.user_interface.append(self.logo)
 
+        load = image_handling.get_image('img/titlescreen/load.png')
+        load_pos = (550,315)
+        self.load_game_button = graphicaluserinterface.Button(load,load_pos)
+        self.user_interface.append(self.load_game_button)
+
+        new = image_handling.get_image('img/titlescreen/new.png')
+        new_pos = (550,270)
+        self.new_game_button = graphicaluserinterface.Button(new,new_pos)
+        self.user_interface.append(self.new_game_button)
+
+        option = image_handling.get_image('img/titlescreen/option.png')
+        option_pos = (550,360)
+        self.options_button = graphicaluserinterface.Button(option,option_pos)
+        self.user_interface.append(self.options_button)
+
+        quit = image_handling.get_image('img/titlescreen/quit.png')
+        quit_pos = (550,405)
+        self.quit_button = graphicaluserinterface.Button(quit,quit_pos)
+        self.user_interface.append(self.quit_button)
+
+        for g in self.user_interface:
+            self.canvas.blit(g.image, g.position)
 
 
     def check_events(self):
@@ -51,8 +67,11 @@ class Title(State):
 
 
     def update_screen(self):
+
         self.screen.fill((0,0,0))
         self.screen.blit(self.canvas, self.canvas_pos)
+        for g in self.user_interface:
+            g.check_mouse()
         pygame.display.update()
 
     def quit(self):

@@ -7,8 +7,8 @@
 # --------------------------------------------------------------------
 import pygame
 
-def print_info(surface, msg, x, row=0):
-    font = pygame.font.Font(None, 12)
+def print_info(surface, msg, x=10, row=0):
+    font = pygame.font.Font(None, 16)
     text = font.render(msg, 1, (254,254,254))
     pos = [x,10+16*row]
     surface.blit(text, pos)
@@ -24,6 +24,22 @@ def text_widget(r,g,b, text, size, x,y):
     screen = pygame.display.get_surface()
     col = pygame.Color((r,g,b))
 
+
+class Button(object):
+    def __init__(self, image, pos):
+        self.image = image
+        self.rect = self.image.get_rect()
+        self.position = pos
+        self.screen = pygame.display.get_surface()
+    def set_position(self, pos):
+        self.rect.topleft = pos
+
+    def get_position(self):
+        return self.rect.topleft
+
+    def check_mouse(self):
+        mos_pos = pygame.mouse.get_pos()
+        print_info(self.screen, str(mos_pos))
 
 class Widget(pygame.Surface):
     def __init__(self, size, image=None):
