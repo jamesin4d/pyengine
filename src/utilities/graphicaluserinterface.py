@@ -29,8 +29,14 @@ class Button(object):
     def __init__(self, image, pos):
         self.image = image
         self.rect = self.image.get_rect()
+        self.set_position(pos)
         self.position = pos
         self.screen = pygame.display.get_surface()
+        self.mouse_in_x_bounds = False
+        self.mouse_in_y_bounds = False
+        self.mouse_in_bounds = False
+        self.clicked_on = False
+
     def set_position(self, pos):
         self.rect.topleft = pos
 
@@ -38,8 +44,23 @@ class Button(object):
         return self.rect.topleft
 
     def check_mouse(self):
+        self.mouse_in_x_bounds = False
+        self.mouse_in_y_bounds = False
+        self.mouse_in_bounds = False
         mos_pos = pygame.mouse.get_pos()
-        print_info(self.screen, str(mos_pos))
+        if mos_pos[0] > self.rect.left:
+            if mos_pos[0] < self.rect.right:
+                self.mouse_in_x_bounds = True
+        if mos_pos[1] > self.rect.top:
+            if mos_pos[1] < self.rect.bottom:
+                self.mouse_in_y_bounds = True
+        if self.mouse_in_x_bounds and self.mouse_in_y_bounds:
+            self.mouse_in_bounds = True
+        if self.mouse_in_bounds and pygame.event.get(pygame.MOUSEBUTTONDOWN):
+            self.clicked_on = True
+
+
+
 
 class Widget(pygame.Surface):
     def __init__(self, size, image=None):

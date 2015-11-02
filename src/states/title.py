@@ -7,7 +7,7 @@
 # --------------------------------------------------------------------
 from ..eng import State
 from game import Game
-from ..utilities import image_handling, graphicaluserinterface
+from ..utilities import image_handling, graphicaluserinterface, debugger
 import pygame
 
 
@@ -58,6 +58,18 @@ class Title(State):
 
 
     def check_events(self):
+        for g in self.user_interface:
+            g.check_mouse()
+
+        if self.new_game_button.clicked_on:
+            self.next_state = Game()
+            self.quit()
+        if self.load_game_button.clicked_on:
+            self.next_state = Game()
+            self.quit()
+        if self.quit_button.clicked_on:
+            self.close_game()
+
         for e in pygame.event.get():
             if e.type == pygame.VIDEORESIZE:
                 self.canvas = pygame.transform.scale(self.canvas, (e.w, e.h))
@@ -70,8 +82,6 @@ class Title(State):
 
         self.screen.fill((0,0,0))
         self.screen.blit(self.canvas, self.canvas_pos)
-        for g in self.user_interface:
-            g.check_mouse()
         pygame.display.update()
 
     def quit(self):

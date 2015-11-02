@@ -17,3 +17,7 @@ def display_mouse_info():
     screen = pygame.display.get_surface()
     mos_pos = pygame.mouse.get_pos()
     screen_print(screen, str(mos_pos))
+
+def display_pygame_event_info():
+    screen = pygame.display.get_surface()
+    screen_print(screen, str(pygame.event.get()))

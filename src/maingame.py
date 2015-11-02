@@ -23,3 +23,4 @@ def main():
     e = FiniteStateMachine()
     e.current_state = splash.SplashScreen()
     e.run()
+
