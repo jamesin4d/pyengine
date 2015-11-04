@@ -7,6 +7,7 @@
 # --------------------------------------------------------------------
 from ..eng import State
 from game import Game
+from new_game import  Register
 from ..utilities import image_handling, graphicaluserinterface, debugger
 import pygame
 
