@@ -62,14 +62,14 @@ class Title(State):
         for g in self.user_interface:
             g.check_mouse()
 
-        if self.new_game_button.clicked_on:
-            self.next_state = Game()
-            self.quit()
-        if self.load_game_button.clicked_on:
-            self.next_state = Game()
-            self.quit()
-        if self.quit_button.clicked_on:
-            self.close_game()
+            if self.new_game_button.clicked_on:
+                self.next_state = Register()
+                self.quit()
+            if self.load_game_button.clicked_on:
+                self.next_state = Game()
+                self.quit()
+            if self.quit_button.clicked_on:
+                self.close_game()
 
         for e in pygame.event.get():
             if e.type == pygame.VIDEORESIZE:

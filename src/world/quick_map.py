@@ -23,10 +23,12 @@ def quickmap(filename):
     tilesets = map_dictionary["tilesets"]
     all_tiles = gather_images_from_set(tilesets)
 
-    collision = populate_sprite_lists(layers, all_tiles, tileheight, tilewidth)
+    collision, back, fore = populate_sprite_lists(layers, all_tiles, tileheight, tilewidth)
     quickmap_dictionary = {
         'map_rect': map_rect,
         'collision': collision,
+        'background': back,
+        'foreground': fore,
         'tileheight': tileheight,
         'tilewidth': tilewidth
     }
@@ -52,12 +54,20 @@ def gather_images_from_set(tileset):
 
 def populate_sprite_lists(layers, all_tiles, tw, th):
     collision_list = []
+    foreground = []
+    background = []
     for layer in layers:
         collision = False
+        fore = False
+        back = False
         if 'properties' in layer:
             properties = layer['properties']
-            if 'collision' in properties:
+            if 's' in properties:
                 collision = True
+            if 'f' in properties:
+                fore = True
+            if 'b' in properties:
+                back = True
         data = layer['data']
         index = 0
         for y in range(0, layer['height']):
@@ -69,5 +79,15 @@ def populate_sprite_lists(layers, all_tiles, tw, th):
                         solid.rect = pygame.Rect(x*tw, y*th, tw, th)
                         solid.image = all_tiles[id_key]
                         collision_list.append(solid)
+                    if fore:
+                        fgBlock = blocks.Block()
+                        fgBlock.rect = pygame.Rect(x*tw, y*th, tw, th)
+                        fgBlock.image = all_tiles[id_key]
+                        foreground.append(fgBlock)
+                    if back:
+                        bgBlock = blocks.Block()
+                        bgBlock.rect = pygame.Rect(x*tw, y*th, tw, th)
+                        bgBlock.image = all_tiles[id_key]
+                        background.append(bgBlock)
                 index += 1
-    return collision_list
+    return collision_list, foreground, background

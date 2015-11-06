@@ -6,7 +6,6 @@
 #
 # --------------------------------------------------------------------
 from ..eng import State
-from title import Title
 from ..utilities import image_handling, graphicaluserinterface
 import pygame
 
